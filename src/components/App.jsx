@@ -15,21 +15,32 @@ function Question(props){
     </div>);
 }
 
-function NextQuestion() {
-  return <button>Next Question</button>;
+function NextQuestion(props) {
+  return <button onClick={props.justClicked}>Next Question</button>;
 }
 
 function App() {
-  let question = 0;
+  //let question = 0;
+  let [question, setNextQuestion] = useState(0);
+  const nextQuestion = () => {
+    setNextQuestion(question + 1);
+    setIsAnswered("unanswered");
+    console.log(question);
+  };
   let answers = data[question].question.choices;
-  let [isAnswered, setIsAnswered] = useState(false);
-  const buttonClicked = setIsAnswered(true);
+  let [isAnswered, setIsAnswered] = useState("unanswered");
+  const buttonClicked = () => {
+    let answerIndex = data[question].question.correct_choice_index;
+    setIsAnswered(answers[answerIndex]);
+    console.log(isAnswered);
+  };
   return (<div className="app">Trivia!
     <Question question={data[question].question.text} answers={answers}/>
     <div>
-      <button>Show the correct answer</button>
+      <button onClick={buttonClicked}>Show the correct answer</button>
+      <p>The correct answer is {isAnswered}.</p>
     </div>
-    <NextQuestion />
+    <NextQuestion justClicked={nextQuestion}/>
   </div> );
 }
 
