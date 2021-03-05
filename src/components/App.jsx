@@ -1,53 +1,42 @@
 import React, { Component, useState } from "react";
 import "../css/App.css";
 import data from "../sample_data.json";
-
-function Question(props){
-  console.log(data[0].question.choices);
-  let answers = props.answers;
-  let question = props.question;
-  let newAnswers = answers.map(answer => <Answer text={answer}/>);
-  return (<div>
-    <p>{question}</p>
-    <div>
-      {newAnswers}
-    </div>
-    </div>);
-}
-
-function NextQuestion(props) {
-  return <button onClick={props.justClicked}>Next Question</button>;
-}
+import Answer from "./Answer.jsx";
+import Question from "./Question.jsx";
+import NextQuestion from "./NextQuestion.jsx";
 
 function App() {
-  //let question = 0;
-  let [question, setNextQuestion] = useState(0);
+  let [questionIndex, setNextQuestion] = useState(0);
   const nextQuestion = () => {
-    setNextQuestion(question + 1);
+    setNextQuestion(questionIndex + 1);
     setIsAnswered("unanswered");
-    console.log(question);
+    console.log(questionIndex);
   };
-  let answers = data[question].question.choices;
+
+  let answers = data[questionIndex].question.choices;
   let [isAnswered, setIsAnswered] = useState("unanswered");
   const buttonClicked = () => {
-    let answerIndex = data[question].question.correct_choice_index;
+    let answerIndex = data[questionIndex].question.correct_choice_index;
     setIsAnswered(answers[answerIndex]);
     console.log(isAnswered);
   };
+
+  let nextQuestions;
+  let arrayLength = data.length - 1;
+  if (questionIndex < arrayLength) {
+    nextQuestions = <NextQuestion justClicked={nextQuestion}/>;
+  } else {
+    nextQuestions = "";
+  }
+
   return (<div className="app">Trivia!
-    <Question question={data[question].question.text} answers={answers}/>
+    <Question question={data[questionIndex].question.text} answers={answers} checkB={buttonClicked}/>
     <div>
       <button onClick={buttonClicked}>Show the correct answer</button>
       <p>The correct answer is {isAnswered}.</p>
     </div>
-    <NextQuestion justClicked={nextQuestion}/>
+    {nextQuestions}
   </div> );
-}
-
-function Answer(props) {
-  return(
-    <p>{props.text}</p>
-  );
 }
 
 export default App;
