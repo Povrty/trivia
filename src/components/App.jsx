@@ -10,7 +10,6 @@ function App() {
   const nextQuestion = () => {
     setNextQuestion(questionIndex + 1);
     setIsAnswered("unanswered");
-    console.log(questionIndex);
   };
 
   let answers = data[questionIndex].question.choices;
@@ -21,22 +20,32 @@ function App() {
     console.log(isAnswered);
   };
 
+  let correctAnswer;
+
+
   let nextQuestions;
   let arrayLength = data.length - 1;
   if (questionIndex < arrayLength) {
-    nextQuestions = <NextQuestion justClicked={nextQuestion}/>;
+    nextQuestions = <NextQuestion justClicked={nextQuestion} />;
   } else {
     nextQuestions = "";
   }
 
-  return (<div className="app">Trivia!
-    <Question question={data[questionIndex].question.text} answers={answers} checkB={buttonClicked}/>
-    <div>
-      <button onClick={buttonClicked}>Show the correct answer</button>
-      <p>The correct answer is {isAnswered}.</p>
+  return (
+    <div className="app">
+      Trivia!
+      <Question
+        question={data[questionIndex].question.text}
+        answers={answers}
+        checkOnClick={buttonClicked}
+      />
+      <div>
+        <button onClick={buttonClicked}>Show the correct answer</button>
+        <p>The correct answer is {isAnswered}.</p>
+      </div>
+      {nextQuestions}
     </div>
-    {nextQuestions}
-  </div> );
+  );
 }
 
 export default App;
