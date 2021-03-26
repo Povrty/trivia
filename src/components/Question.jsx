@@ -6,6 +6,7 @@ function Question(props){
   let answers = props.answers;
   let question = props.question;
   let buttonCheck = props.checkOnClick;
+  // let 
   let newAnswers = answers.map((answer, index) => 
     <Answer key={index} buttonCheckFunction={buttonCheck} text={answer}/>);
   return (<div>

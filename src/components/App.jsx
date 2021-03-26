@@ -9,19 +9,23 @@ function App() {
   let [questionIndex, setNextQuestion] = useState(0);
   const nextQuestion = () => {
     setNextQuestion(questionIndex + 1);
-    setIsAnswered("unanswered");
+    setIsAnswered("Choose wisely!");
   };
 
+  //let answerText = "Choose wisely!";
+  //isAnswered = answerText;
   let answers = data[questionIndex].question.choices;
-  let [isAnswered, setIsAnswered] = useState("unanswered");
+  let [isAnswered, setIsAnswered] = useState("Choose wisely!");
   const buttonClicked = () => {
     let answerIndex = data[questionIndex].question.correct_choice_index;
-    setIsAnswered(answers[answerIndex]);
-    console.log(isAnswered);
+    if (<Answer/> === answerIndex){
+      setIsAnswered("The correct answer is " + answers[answerIndex] + ".");
+    } else {
+      setIsAnswered("Wrong! The correct answer is " + answers[answerIndex] + ".");
+    }
+    
+    console.log(answerIndex);  
   };
-
-  let correctAnswer;
-
 
   let nextQuestions;
   let arrayLength = data.length - 1;
@@ -40,12 +44,11 @@ function App() {
         checkOnClick={buttonClicked}
       />
       <div>
-        <button onClick={buttonClicked}>Show the correct answer</button>
-        <p>The correct answer is {isAnswered}.</p>
+        <p>{isAnswered}</p>
       </div>
       {nextQuestions}
     </div>
   );
 }
 
-export default App;
+  export default App;
