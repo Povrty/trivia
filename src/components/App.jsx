@@ -12,8 +12,6 @@ function App() {
     setIsAnswered("Choose wisely!");
   };
 
-  //let answerText = "Choose wisely!";
-  //isAnswered = answerText;
   let answers = data[questionIndex].question.choices;
   let [isAnswered, setIsAnswered] = useState("Choose wisely!");
   const buttonClicked = () => {
